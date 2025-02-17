@@ -1,9 +1,9 @@
 idf_component_register(SRCS "app_main.c"
                     INCLUDE_DIRS "."
                     REQUIRES HCF_ADC
-                    REQUIRES ioplaca
-                    REQUIRES lcdvia595
-                    REQUIRES mp_hcf
+                    REQUIRES HCF_IOTEC
+                    REQUIRES HCF_LCD
+                    REQUIRES HCF_MP
                     )
 set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common
     )

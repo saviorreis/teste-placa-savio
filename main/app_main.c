@@ -21,10 +21,10 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#include "ioplaca.h"   // Vai se tornar HCF_IOTEC
-#include "lcdvia595.h" // Vai se tornar HCF_LCD
+#include "HCF_IOTEC.h"   // Vai se tornar HCF_IOTEC
+#include "HCF_LCD.h" // Vai se tornar HCF_LCD
 #include "HCF_ADC.h"   // Vai se tornar HCF_ADC
-#include "MP_hcf.h"   // Vai se tornar HCF_MP
+#include "HCF_MP.h"   // Vai se tornar HCF_MP
 // Incluir HCF_IOT HCF_BT HCF_DHT HCF_ULTRA HCF_RFID HCF_ZMPT HCF_ACS HCF_SERVO HCF_OLED HCF_CAM HCF_SD HCF_LORA
 
 
@@ -60,13 +60,13 @@ void app_main(void)
     /////////////////////////////////////////////////////////////////////////////////////   Inicializações de periféricos (manter assim)
     
     // inicializar os IOs e teclado da placa
-    ioinit();      
+    iniciar_iotec();      
     entradas = io_le_escreve(saidas); // Limpa as saídas e lê o estado das entradas
 
     // inicializar o display LCD 
-    lcd595_init();
-    lcd595_write(1,1,"    Jornada 1   ");
-    lcd595_write(2,1," Programa Basico");
+    iniciar_lcd();
+    escreve_lcd(1,0,"    Jornada 1   ");
+    escreve_lcd(2,0," Programa Basico");
     
     // Inicializar o componente de leitura de entrada analógica
     esp_err_t init_result = iniciar_adc_CHX(0);
@@ -76,7 +76,7 @@ void app_main(void)
 
     //delay inicial
     vTaskDelay(1000 / portTICK_PERIOD_MS); 
-    lcd595_clear();
+    limpar_lcd();
 
     /////////////////////////////////////////////////////////////////////////////////////   Periféricos inicializados
 
@@ -104,10 +104,10 @@ void app_main(void)
         entradas = io_le_escreve(saidas);
 
         sprintf(escrever, "INPUTS:%d%d%d%d%d%d%d%d", IN(7),IN(6),IN(5),IN(4),IN(3),IN(2),IN(1),IN(0));
-        lcd595_write(1,0,escrever);
+        escreve_lcd(1,0,escrever);
 
         sprintf(escrever, "%c", tecla);
-        lcd595_write(2,14,escrever);
+        escreve_lcd(2,14,escrever);
 
         
         
